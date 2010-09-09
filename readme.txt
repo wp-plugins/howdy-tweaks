@@ -12,6 +12,8 @@ Change "Howdy" and add more links to the Favorites drop-down
 
 Change the "Howdy" greeting in the upper right-hand corner, as well add more links. Also add links to the Favorites drop-down.
 
+My favorite as "All Settings" which links to options,php.
+
 == Installation ==
 
 1. Upload the contents of the zip file to the your plugins directory (default: `/wp-content/plugins/`)
