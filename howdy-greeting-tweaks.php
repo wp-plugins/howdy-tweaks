@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Howdy Tweaks
-Plugin URI: http://trepmal.com/
+Plugin URI: http://trepmal.com/plugins/howdy-tweaks/
 Description: Tweaks to the Howdy greeting and Favorites menu
 Author: Kailey Lampert
 Version: 1.0
