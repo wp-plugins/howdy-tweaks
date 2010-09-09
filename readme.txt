@@ -14,6 +14,8 @@ Change the "Howdy" greeting in the upper right-hand corner, as well add more lin
 
 My favorite as "All Settings" which links to options,php.
 
+[trepmal](http://profiles.wordpress.org/users/trepmal/)
+
 == Installation ==
 
 1. Upload the contents of the zip file to the your plugins directory (default: `/wp-content/plugins/`)
