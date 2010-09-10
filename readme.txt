@@ -14,7 +14,11 @@ Change the "Howdy" greeting in the upper right-hand corner, as well add more lin
 
 My favorite is "All Settings" which links to options.php.
 
-[trepmal](http://profiles.wordpress.org/users/trepmal/)
+* [other plugins by this author](http://wordpress.org/extend/plugins/profile/trepmal)
+* [author's profile](http://profiles.wordpress.org/users/trepmal/)
+* [author's forum profile](http://wordpress.org/support/profile/trepmal)
+* [donate](http://kaileylampert.com/donate/)
+* [author's website](http://kaileylampert.com)
 
 == Installation ==
 
