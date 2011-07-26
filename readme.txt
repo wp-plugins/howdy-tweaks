@@ -3,7 +3,7 @@ Contributors: trepmal
 Donate link: http://kaileylampert.com/donate/
 Tags: howdy, favorites, admin links
 Requires at least: 3.0
-Tested up to: 3.1.3
+Tested up to: 3.2.1
 Stable tag: trunk
 
 Change "Howdy" and add more links to the Favorites drop-down
@@ -14,11 +14,11 @@ Change the "Howdy" greeting in the upper right-hand corner, as well add more lin
 
 My favorite is "All Settings" which links to options.php.
 
-In 3.2-beta2, you can still add links, but you cannot change "Howdy."
-
-As the release nears, I'll see if this ability is added back, or if I need to add a JavaScript solution.
-
-* [I'm on twitter](http://twitter.com/trepmal)
+* [other plugins by this author](http://wordpress.org/extend/plugins/profile/trepmal)
+* [author's profile](http://profiles.wordpress.org/users/trepmal/)
+* [author's forum profile](http://wordpress.org/support/profile/trepmal)
+* [donate](http://kaileylampert.com/donate/)
+* [author's website](http://kaileylampert.com)
 
 == Installation ==
 
@@ -33,6 +33,10 @@ As the release nears, I'll see if this ability is added back, or if I need to ad
 2. 
 
 == Changelog ==
+
+= 1.1 =
+* Adjustments for 3.2 (3.2 no longer has a "favorites" menu)
+* code cleanup
 
 = 1.0 =
 * Initial Release
