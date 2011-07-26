@@ -1,0 +1,53 @@
+# Translation of the WordPress plugin   by .
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/howdy-tweaks\n"
+"POT-Creation-Date: 2010-09-09 01:58+0000\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: howdy-greeting-tweaks.php:86 howdy-greeting-tweaks.php:92
+msgid "Howdy Tweaks"
+msgstr ""
+
+#: howdy-greeting-tweaks.php:102
+msgid "Greeting"
+msgstr ""
+
+#: howdy-greeting-tweaks.php:107 howdy-greeting-tweaks.php:112
+msgid "Label"
+msgstr ""
+
+#: howdy-greeting-tweaks.php:107 howdy-greeting-tweaks.php:112
+msgid "Favorites"
+msgstr ""
+
+#: howdy-greeting-tweaks.php:107 howdy-greeting-tweaks.php:112
+msgid "Info Links"
+msgstr ""
+
+#: howdy-greeting-tweaks.php:107 howdy-greeting-tweaks.php:112
+msgid "Link"
+msgstr ""
+
+#: howdy-greeting-tweaks.php:138
+msgid "Multisite: Use %ID% as a site ID variable"
+msgstr ""
+
+#: howdy-greeting-tweaks.php:139
+msgid "Erase a label and save to remove an entry."
+msgstr ""
+
+#: howdy-greeting-tweaks.php:140
+msgid "Save"
+msgstr ""
