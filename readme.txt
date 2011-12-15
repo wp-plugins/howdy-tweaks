@@ -2,8 +2,8 @@
 Contributors: trepmal 
 Donate link: http://kaileylampert.com/donate/
 Tags: howdy, favorites, admin links
-Requires at least: 3.0
-Tested up to: 3.2.1
+Requires at least: 3.3
+Tested up to: 3.3
 Stable tag: trunk
 
 Change "Howdy" and add more links to the Favorites drop-down
@@ -29,10 +29,23 @@ My favorite is "All Settings" which links to options.php.
 
 == Screenshots ==
 
-1. 
-2. 
+1. WordPress 3.3
+2. WordPress 3.3
+3. pre 2.0
+4. pre 2.0
+
+== Upgrade Notice ==
+
+= 2.0 =
+Requires WordPress 3.3. Favorites brought back.
 
 == Changelog ==
+
+= 2.0 =
+* Requires WordPress 3.3
+* Favorites brought back via a custom Favorites menu added to the Toolbar
+* Added some jQuery goodness to the admin.
+* Added some Help info in the help tab
 
 = 1.1 =
 * Adjustments for 3.2 (3.2 no longer has a "favorites" menu)
