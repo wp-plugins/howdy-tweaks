@@ -4,7 +4,7 @@ Plugin Name: Howdy Tweaks
 Plugin URI: http://trepmal.com/plugins/howdy-tweaks/
 Description: Tweaks to the Howdy greeting and Favorites menu
 Author: Kailey Lampert
-Version: 2
+Version: 2.1
 Author URI: http://kaileylampert.com/
 
 Copyright (C) 2011  Kailey Lampert
@@ -81,6 +81,9 @@ class howdy_tweaks {
 		$greeting = get_option( 'ht_greeting', 'Howdy,');
 
 		echo '<p><label for="greeting">' . __( 'Greeting', 'howdy_tweaks' ) . ': <input type="text" name="ht_greeting" id="greeting" value="' . $greeting. '" size="50" /></label></p>';
+		echo '<p>'. sprintf( __( 'Available placeholders: %1$s', 'howdy_tweaks' ) , '<code>%name%</code>' ) .'<br />'.
+		__( 'If not specified, %name% will be added to the end. ', 'howdy_tweaks' ) .'</p>';
+
 		$garbage = uniqid();
 		echo "<input type='hidden' id='ht_garbage' value='{$garbage}' />";
 		?>
@@ -212,7 +215,18 @@ class howdy_tweaks {
 		//get the node that contains "howdy"
 		$my_account = $wp_admin_bar->get_node('my-account');
 		//change the "howdy"
-		$my_account->title = str_replace( 'Howdy,', $greeting, $my_account->title );
+		
+		$user_id = get_current_user_id();
+		$current_user = wp_get_current_user();
+		$avatar = get_avatar( $user_id, 16 );
+
+		if (strpos( $greeting, '%name%' ) !== false ) {
+			$howdy = str_replace( '%name%', $current_user->display_name, $greeting );
+		} else {
+			$howdy = $greeting . ' ' . $current_user->display_name;
+		}
+
+		$my_account->title = $howdy . $avatar;
 		//remove the original node
 		$wp_admin_bar->remove_node('my-account');
 		//add back our modified version
