@@ -37,7 +37,7 @@ My favorite is "All Settings" which links to options.php.
 == Upgrade Notice ==
 
 = 2.1 =
-Now supports non-English languages.
+Now supports non-English languages. Translatable
 
 = 2.0 =
 Requires WordPress 3.3. Favorites brought back.
@@ -46,6 +46,7 @@ Requires WordPress 3.3. Favorites brought back.
 
 = 2.1 =
 * Support for non-English languages
+* Translatable
 
 = 2.0 =
 * Requires WordPress 3.3
