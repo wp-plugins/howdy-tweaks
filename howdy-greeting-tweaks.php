@@ -23,11 +23,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+load_plugin_textdomain( 'howdy-tweaks', false, dirname( plugin_basename( __FILE__ ) ) .  '/lang' );
+
 new howdy_tweaks();
 
 class howdy_tweaks {
 
-	function howdy_tweaks() {
+	function __construct() {
+
 		add_action( 'admin_init', array( &$this, 'register' ) );
 		add_action( 'admin_menu', array( &$this, 'menu' ) );
 		add_action( 'admin_enqueue_scripts', array( &$this, 'scripts' ) );
@@ -37,8 +40,8 @@ class howdy_tweaks {
 	}
 
 	function register() {
-		register_setting( 'howdy_tweaks_options', 'ht_options', array ( &$this, 'sanitize' ) );
-		register_setting( 'howdy_tweaks_options', 'ht_greeting', 'esc_attr' );
+		register_setting( 'howdy-tweaks_options', 'ht_options', array ( &$this, 'sanitize' ) );
+		register_setting( 'howdy-tweaks_options', 'ht_greeting', 'esc_attr' );
 	}
 
 	function sanitize( $input ) {
@@ -57,12 +60,12 @@ class howdy_tweaks {
 
 	function menu() {
 		global $howdy_tweaks_page;
-		$howdy_tweaks_page = add_options_page( __( 'Howdy Tweaks', 'howdy_tweaks' ),  __( 'Howdy Tweaks', 'howdy_tweaks' ), 'administrator', 'howdy_tweaks', array( &$this, 'page' ) );
+		$howdy_tweaks_page = add_options_page( __( 'Howdy Tweaks', 'howdy-tweaks' ),  __( 'Howdy Tweaks', 'howdy-tweaks' ), 'administrator', 'howdy-tweaks', array( &$this, 'page' ) );
 		add_action("load-$howdy_tweaks_page", array( &$this, 'help_tab' ) );
 	}
 
 	function scripts( $hook ) {
-		if ( $hook != 'settings_page_howdy_tweaks' ) return;
+		if ( $hook != 'settings_page_howdy-tweaks' ) return;
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
@@ -72,17 +75,17 @@ class howdy_tweaks {
 	function page() {
 
 		echo '<div class="wrap">';
-		echo '<h2>' . __('Howdy Tweaks', 'howdy_tweaks' ) . '</h2>';
+		echo '<h2>' . __('Howdy Tweaks', 'howdy-tweaks' ) . '</h2>';
 
 		echo '<form method="post" action="options.php">';
-		settings_fields( 'howdy_tweaks_options' );
+		settings_fields( 'howdy-tweaks_options' );
 
 		$values = get_option( 'ht_options', array() );
 		$greeting = get_option( 'ht_greeting', 'Howdy,');
 
-		echo '<p><label for="greeting">' . __( 'Greeting', 'howdy_tweaks' ) . ': <input type="text" name="ht_greeting" id="greeting" value="' . $greeting. '" size="50" /></label></p>';
-		echo '<p>'. sprintf( __( 'Available placeholders: %1$s', 'howdy_tweaks' ) , '<code>%name%</code>' ) .'<br />'.
-		__( 'If not specified, %name% will be added to the end. ', 'howdy_tweaks' ) .'</p>';
+		echo '<p><label for="greeting">' . __( 'Greeting', 'howdy-tweaks' ) . ': <input type="text" name="ht_greeting" id="greeting" value="' . $greeting. '" size="50" /></label></p>';
+		echo '<p>'. sprintf( __( 'Available placeholders: %1$s', 'howdy-tweaks' ) , '<code>%name%</code>' ) .'<br />'.
+		__( 'If not specified, %name% will be added to the end. ', 'howdy-tweaks' ) .'</p>';
 
 		$garbage = uniqid();
 		echo "<input type='hidden' id='ht_garbage' value='{$garbage}' />";
@@ -90,18 +93,18 @@ class howdy_tweaks {
 		<table class="widefat" id="ht_table">
 		<thead>
 			<tr>
-				<th><?php _e( 'Label', 'howdy_tweaks' ); ?></th>
-				<th><?php _e( 'Favorites', 'howdy_tweaks' ); ?></th>
-				<th><?php _e( 'Info Links', 'howdy_tweaks' ); ?></th>
-				<th><?php _e( 'Link', 'howdy_tweaks' ); ?></th>
+				<th><?php _e( 'Label', 'howdy-tweaks' ); ?></th>
+				<th><?php _e( 'Favorites', 'howdy-tweaks' ); ?></th>
+				<th><?php _e( 'Info Links', 'howdy-tweaks' ); ?></th>
+				<th><?php _e( 'Link', 'howdy-tweaks' ); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<th><?php _e( 'Label', 'howdy_tweaks' ); ?></th>
-				<th><?php _e( 'Favorites', 'howdy_tweaks' ); ?></th>
-				<th><?php _e( 'Info Links', 'howdy_tweaks' ); ?></th>
-				<th><?php _e( 'Link', 'howdy_tweaks' ); ?></th>
+				<th><?php _e( 'Label', 'howdy-tweaks' ); ?></th>
+				<th><?php _e( 'Favorites', 'howdy-tweaks' ); ?></th>
+				<th><?php _e( 'Info Links', 'howdy-tweaks' ); ?></th>
+				<th><?php _e( 'Link', 'howdy-tweaks' ); ?></th>
 			</tr>
 		</tfoot>
 		<tbody>
@@ -123,7 +126,7 @@ class howdy_tweaks {
 		</table>
 		<?php
 
-		echo '<p><input type="submit" class="button-primary" value="' . __( 'Save', 'howdy_tweaks' ) . '" /> <a href="#" class="ht_add_new">' . __( 'Add another row', 'howdy_tweaks' ) . '</a></p>';
+		echo '<p><input type="submit" class="button-primary" value="' . __( 'Save', 'howdy-tweaks' ) . '" /> <a href="#" class="ht_add_new">' . __( 'Add another row', 'howdy-tweaks' ) . '</a></p>';
 		echo '</form>';
 
 		echo '</div>';
@@ -137,20 +140,20 @@ class howdy_tweaks {
     	    return;
 
 	    $screen->add_help_tab( array(
-        	'id'	=> 'howdy_tweaks',
-    	    'title'	=> __( 'Howdy Tweaks', 'howdy_tweaks' ),
+        	'id'	=> 'howdy-tweaks',
+    	    'title'	=> __( 'Howdy Tweaks', 'howdy-tweaks' ),
    	 		'content' => $this->help(),
 	    ) );
 	}
 
 	function help() {
 		$help = '';
-		$help .= '<p>' . __( 'Items checked "Favorites" will appear in a new Favorites menu on the right side of the Toolbar.', 'howdy_tweaks' ) . ' ';
-		$help .= __( 'If there are no "favorites," the menu will not be created.', 'howdy_tweaks' ) . '</p>';
-		$help .= '<p>' . __( "You can drag-n-drop each row so the the items will appear in the order you'd prefer", 'howdy_tweaks' ) . '</p>';
-		$help .= '<p>' . __( 'Click "Add another row" to quickly add more items.', 'howdy_tweaks' ) . '</p>';
-		$help .= '<p>' . __( 'To remove an item, simply delete its label.', 'howdy_tweaks' ) . '</p>';
-		$help .= '<p>' . sprintf( __( "If you are using WordPress Multisite, you can use %s as a placeholder for the current site's ID.", 'howdy_tweaks' ), '<code>%ID%</code>' ) . '</p>';
+		$help .= '<p>' . __( 'Items checked "Favorites" will appear in a new Favorites menu on the right side of the Toolbar.', 'howdy-tweaks' ) . ' ';
+		$help .= __( 'If there are no "favorites," the menu will not be created.', 'howdy-tweaks' ) . '</p>';
+		$help .= '<p>' . __( "You can drag-n-drop each row so the the items will appear in the order you'd prefer", 'howdy-tweaks' ) . '</p>';
+		$help .= '<p>' . __( 'Click "Add another row" to quickly add more items.', 'howdy-tweaks' ) . '</p>';
+		$help .= '<p>' . __( 'To remove an item, simply delete its label.', 'howdy-tweaks' ) . '</p>';
+		$help .= '<p>' . sprintf( __( "If you are using WordPress Multisite, you can use %s as a placeholder for the current site's ID.", 'howdy-tweaks' ), '<code>%ID%</code>' ) . '</p>';
 		return $help;
 	}
 	function the_info_tweaks( $wp_admin_bar ) {
@@ -234,4 +237,4 @@ class howdy_tweaks {
 
 	}
 
-}//end class howdy_tweaks
+}//end class howdy-tweaks
