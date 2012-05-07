@@ -14,6 +14,8 @@ Change the "Howdy" greeting in the upper right-hand corner, as well add more lin
 
 My favorite is "All Settings" which links to options.php.
 
+Check out the [dev version (2.1)](http://wordpress.org/extend/plugins/howdy-tweaks/download/), for non-English language support
+
 * [other plugins by this author](http://wordpress.org/extend/plugins/profile/trepmal)
 * [author's profile](http://profiles.wordpress.org/users/trepmal/)
 * [author's forum profile](http://wordpress.org/support/profile/trepmal)
