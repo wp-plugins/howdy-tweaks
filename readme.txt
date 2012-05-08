@@ -4,7 +4,7 @@ Donate link: http://kaileylampert.com/donate/
 Tags: howdy, favorites, admin links
 Requires at least: 3.3
 Tested up to: 3.3
-Stable tag: 2.0
+Stable tag: trunk
 
 Change "Howdy" and add more links to the Favorites drop-down
 
