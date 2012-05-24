@@ -4,7 +4,7 @@ Donate link: http://kaileylampert.com/donate/
 Tags: howdy, favorites, admin links
 Requires at least: 3.3
 Tested up to: 3.3
-Stable tag: trunk
+Stable tag: 2.1
 
 Change "Howdy" and add more links to the Favorites drop-down
 
@@ -36,6 +36,9 @@ My favorite is "All Settings" which links to options.php.
 
 == Upgrade Notice ==
 
+= 2.2 =
+User-specific favorites support
+
 = 2.1 =
 Now supports non-English languages. Translatable
 
@@ -43,6 +46,9 @@ Now supports non-English languages. Translatable
 Requires WordPress 3.3. Favorites brought back.
 
 == Changelog ==
+
+= 2.2 =
+* Support for user-specific favorites
 
 = 2.1 =
 * Support for non-English languages

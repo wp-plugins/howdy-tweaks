@@ -4,10 +4,10 @@ Plugin Name: Howdy Tweaks
 Plugin URI: http://trepmal.com/plugins/howdy-tweaks/
 Description: Tweaks to the Howdy greeting and Favorites menu
 Author: Kailey Lampert
-Version: 2.1
+Version: 2.2
 Author URI: http://kaileylampert.com/
 
-Copyright (C) 2011  Kailey Lampert
+Copyright (C) 2012  Kailey Lampert
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,6 +40,13 @@ class howdy_tweaks {
 	}
 
 	function register() {
+		/* intercept user favorites */
+		if ( isset( $_POST['ht_options_user'] ) ) {
+			$input = $this->sanitize( $_POST['ht_options_user'] );
+			update_user_meta( get_current_user_id(), 'ht_options', $input );
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) return;
 		register_setting( 'howdy-tweaks_options', 'ht_options', array ( &$this, 'sanitize' ) );
 		register_setting( 'howdy-tweaks_options', 'ht_greeting', 'esc_attr' );
 	}
@@ -48,8 +55,8 @@ class howdy_tweaks {
 
 		foreach( $input as $k => $opts ) {
 			$input[ $k ]['label'] = esc_attr( $opts['label'] );
-			$input[ $k ]['favs'] = isset( $opts['favs'] ) ? 1 : 0;
-			$input[ $k ]['info'] = isset( $opts['info'] ) ? 1 : 0;
+			$input[ $k ]['favs'] = isset( $opts['favs'] ) ? 1 : '';
+			$input[ $k ]['info'] = isset( $opts['info'] ) ? 1 : '';
 			$input[ $k ]['url'] = empty( $opts['url'] ) ? '' : esc_url( $opts['url'] );
 			if ( empty( $input[ $k ]['label'] ) )
 				unset( $input[ $k ] );
@@ -60,7 +67,7 @@ class howdy_tweaks {
 
 	function menu() {
 		global $howdy_tweaks_page;
-		$howdy_tweaks_page = add_options_page( __( 'Howdy Tweaks', 'howdy-tweaks' ),  __( 'Howdy Tweaks', 'howdy-tweaks' ), 'administrator', 'howdy-tweaks', array( &$this, 'page' ) );
+		$howdy_tweaks_page = add_options_page( __( 'Howdy Tweaks', 'howdy-tweaks' ),  __( 'Howdy Tweaks', 'howdy-tweaks' ), 'edit_posts', 'howdy-tweaks', array( &$this, 'page' ) );
 		add_action("load-$howdy_tweaks_page", array( &$this, 'help_tab' ) );
 	}
 
@@ -77,56 +84,84 @@ class howdy_tweaks {
 		echo '<div class="wrap">';
 		echo '<h2>' . __('Howdy Tweaks', 'howdy-tweaks' ) . '</h2>';
 
-		echo '<form method="post" action="options.php">';
+		echo '<form method="post" action="'. ( current_user_can( 'manage_options' ) ? 'options.php' : '' ) .'">';
 		settings_fields( 'howdy-tweaks_options' );
 
-		$values = get_option( 'ht_options', array() );
-		$greeting = get_option( 'ht_greeting', 'Howdy,');
+		if ( current_user_can( 'manage_options' ) ) {
+			$greeting = get_option( 'ht_greeting', 'Howdy,');
+	
+			echo '<p><label for="greeting">' . __( 'Greeting', 'howdy-tweaks' ) . ': <input type="text" name="ht_greeting" id="greeting" value="' . $greeting. '" size="50" /></label></p>';
+			echo '<p>'. sprintf( __( 'Available placeholders: %1$s', 'howdy-tweaks' ) , '<code>%name%</code>' ) .'<br />'.
+			__( 'If not specified, %name% will be added to the end. ', 'howdy-tweaks' ) .'</p>';
+		}
 
-		echo '<p><label for="greeting">' . __( 'Greeting', 'howdy-tweaks' ) . ': <input type="text" name="ht_greeting" id="greeting" value="' . $greeting. '" size="50" /></label></p>';
-		echo '<p>'. sprintf( __( 'Available placeholders: %1$s', 'howdy-tweaks' ) , '<code>%name%</code>' ) .'<br />'.
-		__( 'If not specified, %name% will be added to the end. ', 'howdy-tweaks' ) .'</p>';
+		/***************/
+		function options_table( $name ) {
 
-		$garbage = uniqid();
-		echo "<input type='hidden' id='ht_garbage' value='{$garbage}' />";
-		?>
-		<table class="widefat" id="ht_table">
-		<thead>
-			<tr>
-				<th><?php _e( 'Label', 'howdy-tweaks' ); ?></th>
-				<th><?php _e( 'Favorites', 'howdy-tweaks' ); ?></th>
-				<th><?php _e( 'Info Links', 'howdy-tweaks' ); ?></th>
-				<th><?php _e( 'Link', 'howdy-tweaks' ); ?></th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th><?php _e( 'Label', 'howdy-tweaks' ); ?></th>
-				<th><?php _e( 'Favorites', 'howdy-tweaks' ); ?></th>
-				<th><?php _e( 'Info Links', 'howdy-tweaks' ); ?></th>
-				<th><?php _e( 'Link', 'howdy-tweaks' ); ?></th>
-			</tr>
-		</tfoot>
-		<tbody>
-			<?php foreach($values as $id => $opt) { ?>
-			<tr>
-				<td><input type="text" name="ht_options[<?php echo $id; ?>][label]" value="<?php echo $opt['label']; ?>" size="40" /></td>
-				<td><input type="checkbox" name="ht_options[<?php echo $id; ?>][favs]" value="1" <?php checked($opt['favs']); ?> /></td>
-				<td><input type="checkbox" name="ht_options[<?php echo $id; ?>][info]" value="1" <?php checked($opt['info']); ?> /></td>
-				<td><input type="text" name="ht_options[<?php echo $id; ?>][url]" value="<?php echo $opt['url']; ?>" size="40" /></td>
-			</tr>
-			<?php } ?>
-			<tr id="ht_new_row">
-				<td><input type="text" name="ht_options[<?php echo $garbage; ?>][label]" value="" size="40" /></td>
-				<td><input type="checkbox" name="ht_options[<?php echo $garbage; ?>][favs]" value="" /></td>
-				<td><input type="checkbox" name="ht_options[<?php echo $garbage; ?>][info]" value="" /></td>
-				<td><input type="text" name="ht_options[<?php echo $garbage; ?>][url]" value="" size="40" /></td>
-			</tr>
-		</tbody>
-		</table>
-		<?php
+			$heading = '';
+			if ( 'ht_options' == $name ) {
+				if ( ! current_user_can( 'manage_options' ) ) return;
+				$values = get_option( $name, array() );
+				$heading = '<h3>Global Options</h3>';
+			}
+			if ( 'ht_options_user' == $name ) {
+				$values = get_user_meta( get_current_user_id(), 'ht_options', true );
+				$values = empty( $values ) ? array() : $values;
+				$heading = '<h3>User Options</h3>';
+			}
 
-		echo '<p><input type="submit" class="button-primary" value="' . __( 'Save', 'howdy-tweaks' ) . '" /> <a href="#" class="ht_add_new">' . __( 'Add another row', 'howdy-tweaks' ) . '</a></p>';
+			echo '<div class="ht_options_group">';
+			echo $heading;
+			$garbage = uniqid();
+			echo "<input type='hidden' class='ht_garbage' value='{$garbage}' />";
+
+			//echo '<pre>'. print_r($values,true) .'</pre>';
+
+			?>
+			<table class="widefat ht_table">
+			<thead>
+				<tr>
+					<th><?php _e( 'Label', 'howdy-tweaks' ); ?></th>
+					<th><?php _e( 'Favorites', 'howdy-tweaks' ); ?></th>
+					<th><?php _e( 'Info Links', 'howdy-tweaks' ); ?></th>
+					<th><?php _e( 'Link', 'howdy-tweaks' ); ?></th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th><?php _e( 'Label', 'howdy-tweaks' ); ?></th>
+					<th><?php _e( 'Favorites', 'howdy-tweaks' ); ?></th>
+					<th><?php _e( 'Info Links', 'howdy-tweaks' ); ?></th>
+					<th><?php _e( 'Link', 'howdy-tweaks' ); ?></th>
+				</tr>
+			</tfoot>
+			<tbody>
+				<?php foreach( $values as $id => $opt ) { ?>
+				<tr>
+					<td><input type="text" name="<?php echo $name; ?>[<?php echo $id; ?>][label]" value="<?php echo $opt['label']; ?>" size="40" /></td>
+					<td><input type="checkbox" name="<?php echo $name; ?>[<?php echo $id; ?>][favs]" value="1" <?php checked($opt['favs']); ?> /></td>
+					<td><input type="checkbox" name="<?php echo $name; ?>[<?php echo $id; ?>][info]" value="1" <?php checked($opt['info']); ?> /></td>
+					<td><input type="text" name="<?php echo $name; ?>[<?php echo $id; ?>][url]" value="<?php echo $opt['url']; ?>" size="40" /></td>
+				</tr>
+				<?php } ?>
+				<tr class="ht_new_row">
+					<td><input type="text" name="<?php echo $name; ?>[<?php echo $garbage; ?>][label]" value="" size="40" /></td>
+					<td><input type="checkbox" name="<?php echo $name; ?>[<?php echo $garbage; ?>][favs]" value="" /></td>
+					<td><input type="checkbox" name="<?php echo $name; ?>[<?php echo $garbage; ?>][info]" value="" /></td>
+					<td><input type="text" name="<?php echo $name; ?>[<?php echo $garbage; ?>][url]" value="" size="40" /></td>
+				</tr>
+			</tbody>
+			</table>
+			<?php
+	
+			echo '<p><a href="#" class="ht_add_new">' . __( 'Add another row', 'howdy-tweaks' ) . '</a></p>';
+			echo '</div>';
+		}///
+		
+		options_table( 'ht_options' );
+		options_table( 'ht_options_user' );
+
+		submit_button( __( 'Save', 'howdy-tweaks' ), 'primary' );
 		echo '</form>';
 
 		echo '</div>';
@@ -160,6 +195,8 @@ class howdy_tweaks {
 
 		global $blog_id;
 		$opts = get_option( 'ht_options', array() );
+		$opts = array_merge( $opts, (array) get_user_meta( get_current_user_id(), 'ht_options', true ) );
+		$opts = array_filter( $opts ); //clean up empties
 
 		foreach( $opts as $k => $vals ) {
 			if ( $vals['info'] ) {
@@ -182,6 +219,8 @@ class howdy_tweaks {
 	function the_favs_tweaks( $wp_admin_bar ) {
 		global $blog_id;
 		$opts = get_option( 'ht_options', array() );
+		$opts = array_merge( $opts, (array) get_user_meta( get_current_user_id(), 'ht_options', true ) );
+		$opts = array_filter( $opts ); //clean up empties
 
 		$wp_admin_bar->add_menu( array(
 			'id' => 'favorites',
