@@ -14,6 +14,8 @@ Change the "Howdy" greeting in the upper right-hand corner, as well add more lin
 
 My favorite is "All Settings" which links to options.php.
 
+The [development release](http://wordpress.org/extend/plugins/howdy-tweaks/developers/) supports user-specific favorites. Check it out and let me know if you find any bugs.
+
 * [other plugins by this author](http://wordpress.org/extend/plugins/profile/trepmal)
 * [author's profile](http://profiles.wordpress.org/users/trepmal/)
 * [author's forum profile](http://wordpress.org/support/profile/trepmal)
