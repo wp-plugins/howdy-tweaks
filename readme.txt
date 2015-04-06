@@ -1,10 +1,10 @@
 === Howdy Tweaks ===
-Contributors: trepmal 
+Contributors: trepmal
 Donate link: http://kaileylampert.com/donate/
 Tags: howdy, favorites, admin links
 Requires at least: 3.3
-Tested up to: 3.3
-Stable tag: 2.1
+Tested up to: 4.2
+Stable tag: 2.2
 
 Change "Howdy" and add more links to the Favorites drop-down
 
@@ -13,12 +13,6 @@ Change "Howdy" and add more links to the Favorites drop-down
 Change the "Howdy" greeting in the upper right-hand corner, as well add more links. Also add links to the Favorites drop-down.
 
 My favorite is "All Settings" which links to options.php.
-
-* [other plugins by this author](http://wordpress.org/extend/plugins/profile/trepmal)
-* [author's profile](http://profiles.wordpress.org/users/trepmal/)
-* [author's forum profile](http://wordpress.org/support/profile/trepmal)
-* [donate](http://kaileylampert.com/donate/)
-* [author's website](http://kaileylampert.com)
 
 == Installation ==
 
@@ -49,6 +43,8 @@ Requires WordPress 3.3. Favorites brought back.
 
 = 2.2 =
 * Support for user-specific favorites
+* Fix issue on first save of Global options
+* General cleanup
 
 = 2.1 =
 * Support for non-English languages
